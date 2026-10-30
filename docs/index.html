@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://*.workers.dev; frame-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Prestação de contas de deslocamentos</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>Prestação de contas de deslocamentos</h1>
+    <p>Importe a planilha padrão, confira as linhas e gere o relatório com quilometragem, ressarcimento, links e imagens das rotas.</p>
+  </div>
+  <button id="btnConfig" class="secondary">Configurações</button>
+</header>
+<main>
+  <section class="panel">
+    <div class="steps"><span id="st1">1. Configurar</span><span id="st2">2. Importar</span><span id="st3">3. Conferir</span><span id="st4">4. Gerar relatório</span></div>
+    <div class="upload">
+      <div>
+        <h2>Planilha de deslocamentos</h2>
+        <p>Campos obrigatórios: Data, Destino/Empresa, Endereço de origem e Endereço de destino. <a href="modelos/Planilha_Padrao_Deslocamentos.xlsx" download>Baixar planilha modelo</a></p>
+      </div>
+      <label class="button">Selecionar planilha<input id="file" type="file" accept=".xlsx" hidden></label>
+    </div>
+    <div id="message" role="status" aria-live="polite"></div>
+    <div id="preview" hidden>
+      <div class="toolbar">
+        <h2>Conferência</h2>
+        <div class="toolbar-actions"><button id="addRow" class="secondary">Adicionar linha</button><button id="process" class="primary">Calcular rotas e gerar relatório</button></div>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Nº</th><th>Data</th><th>Destino/Empresa</th><th>Endereço de origem</th><th>Endereço de destino</th><th>Observação</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+    </div>
+  </section>
+  <section class="panel">
+    <h2>Relatórios gerados neste dispositivo</h2>
+    <p class="hint">Os relatórios ficam guardados só neste navegador. Salve em PDF o que for entregar.</p>
+    <div id="reports" class="reports"></div>
+  </section>
+  <p class="foot">Seus dados cadastrais e relatórios ficam apenas neste navegador. Para calcular as rotas, somente os endereços são enviados ao serviço de mapas (Geoapify). Dados cartográficos © OpenStreetMap contributors.</p>
+</main>
+
+<dialog id="config">
+  <form method="dialog">
+    <div class="dialog-head"><h2>Seus dados</h2><button value="cancel" class="icon" aria-label="Fechar">×</button></div>
+    <div class="grid">
+      <label>Nome<input id="nome" autocomplete="name"></label>
+      <label>Matrícula<input id="matricula"></label>
+      <label>Cargo/Função<input id="cargo"></label>
+      <label>Lotação / Prefixo<input id="lotacao"></label>
+      <label>Cidade de emissão<input id="cidade"></label>
+      <label>Valor por km (R$)<input id="valor" inputmode="decimal" placeholder="0,00"></label>
+    </div>
+    <h3>Gestor</h3>
+    <div class="grid">
+      <label>Nome<input id="gnome"></label>
+      <label>Matrícula<input id="gmatricula"></label>
+      <label>Cargo/Função<input id="gcargo"></label>
+    </div>
+    <div id="codigoBox" hidden>
+      <h3>Acesso</h3>
+      <label>Código de acesso<input id="codigo" type="password" autocomplete="off" placeholder="Fornecido por quem administra o sistema"></label>
+      <p class="hint">Digitado uma única vez neste dispositivo.</p>
+    </div>
+    <div class="dialog-actions"><button value="cancel" class="secondary">Cancelar</button><button id="save" value="default" class="primary">Salvar</button></div>
+  </form>
+</dialog>
+<script src="config.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

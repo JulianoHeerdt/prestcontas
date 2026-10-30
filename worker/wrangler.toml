@@ -1,0 +1,21 @@
+name = "prestacao-deslocamentos"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+workers_dev = true
+
+[vars]
+# Endereço do site no GitHub Pages (sem barra no final). Separe vários por vírgula.
+ALLOWED_ORIGINS = "https://SEU-USUARIO.github.io"
+
+# Limite de consultas por IP: 60 por minuto (um relatório usa ~6 por deslocamento)
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 60
+  period = 60
+
+# Segredos (NÃO coloque aqui). Configure com:
+#   npx wrangler secret put GEOAPIFY_KEY
+#   npx wrangler secret put ACCESS_CODE     (opcional)
